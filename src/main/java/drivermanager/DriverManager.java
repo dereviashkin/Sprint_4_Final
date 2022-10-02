@@ -3,6 +3,8 @@ package drivermanager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.io.File;
 
@@ -10,19 +12,34 @@ public class DriverManager {
 
     private static WebDriver driver;
 
+    /**
+     * Инициация драйвера в зависимости от переданного имени браузера
+     */
     private static WebDriver init(String browserName) {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
         File driverPath = new File("");
-        if (browserName.toLowerCase().contains("chrome")) {
-            System.setProperty("webdriver.chrome.driver", driverPath.getAbsolutePath() + "\\src\\main\\resources\\webdrivers\\chromedriver.exe");
-        } else if (browserName.toLowerCase().contains("firefox")) {
-            System.setProperty("webdriver.chrome.driver", driverPath.getAbsolutePath() + "\\src\\main\\resources\\webdrivers\\geckodriver.exe");
+        switch (browserName){
+            case "chrome":
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--no-sandbox",  "--disable-dev-shm-usage");
+                System.setProperty("webdriver.chrome.driver", driverPath.getAbsolutePath() + "\\src\\main\\resources\\webdrivers\\chromedriver.exe");
+                driver = new ChromeDriver(chromeOptions);
+                return driver;
+            case "firefox":
+                FirefoxOptions firefoxOptions = new FirefoxOptions();
+                //TODO перепилить аргументы под лису
+                firefoxOptions.setHeadless(true);
+                System.setProperty("webdriver.gecko.driver", driverPath.getAbsolutePath() + "\\src\\main\\resources\\webdrivers\\geckodriver.exe");
+                driver = new FirefoxDriver(firefoxOptions);
+                return driver;
         }
-        return driver;
+        throw new IllegalArgumentException("Не знаю такой браузер: " + browserName);
     }
 
+    /**
+     * Геттер драйвера
+     * @param browserName обозначение браузера
+     * @return объект драйвера
+     */
     public static WebDriver getDriver(String browserName) {
         if (driver == null) {
             driver = init(browserName);
@@ -30,12 +47,18 @@ public class DriverManager {
         return driver;
     }
 
+    /**
+     * Закрыть текущее окно бразуера
+     */
     public static void closeDriver() {
         if (driver != null) {
             driver.close();
         }
     }
 
+    /**
+     * Закрыть все сессии браузера
+     */
     public static void quitDriver() {
         if (driver != null) {
             driver.quit();
