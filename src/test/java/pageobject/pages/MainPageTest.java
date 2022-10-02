@@ -2,13 +2,27 @@ package pageobject.pages;
 
 import org.junit.Test;
 
-public class MainPageTest extends BaseTest{
+public class MainPageTest extends BaseTest {
+    private final MainPage mainPage = new MainPage();
 
     @Test()
-    public void firstOne() {
-        MainPage mainPage = new MainPage();
+    public void clickOrderButtonTopSuccess() {
         mainPage
                 .open()
-                .smthelse();
+                .orderButtonTopClick();
+    }
+
+    @Test()
+    public void clickOrderButtonBottomSuccess() {
+        mainPage
+                .open()
+                .orderButtonBottomClick();
+    }
+
+    @Test()
+    public void textFromFaqExpectedSuccess() {
+        mainPage
+                .open()
+                .getTextFromFaqList();
     }
 }
