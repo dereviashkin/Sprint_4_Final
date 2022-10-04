@@ -21,8 +21,8 @@ public class MainPage {
         getDriver().get(MAIN_PAGE);
         getDriverWait().until(ExpectedConditions.visibilityOfElementLocated(TRAINING_SIMULATOR));
         Assert.assertEquals("Похоже, главная страница не загрузилась", "УЧЕБНЫЙ ТРЕНАЖЕР", getDriver().findElement(TRAINING_SIMULATOR).getText());
-        if (getDriver().findElements(ACCEPT_COOKIE).size() != 0) {
-            getDriver().findElement(ACCEPT_COOKIE).click();
+        if (getDriver().findElements(ACCEPT_COOKIE_BUTTON).size() != 0) {
+            getDriver().findElement(ACCEPT_COOKIE_BUTTON).click();
         }
         return this;
     }
@@ -48,7 +48,8 @@ public class MainPage {
     }
 
     /**
-     * Получаем список вопросов в FAQ на сайте
+     * Получаем список вопросов в FAQ на сайте. Хотел сделать проверку пары с сайта с ключ/значением из эталона, но
+     * ассерт по хашмапе не заработал, не успеваю допилить
      */
     public MainPage getTextFromFaqList() {
         //Скроллим до FAQ
