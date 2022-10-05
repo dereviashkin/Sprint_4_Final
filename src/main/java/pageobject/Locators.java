@@ -14,6 +14,22 @@ public class Locators {
     public static final By ORDER_BUTTON_BOTTOM = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button");
     //Список "Вопросы о важном" веб-элементы вопросов
     public static final By FAQ_QUESTIONS = By.xpath(".//div[@class='accordion__item']");
+    //Список "Вопросы о важном" вопрос 1
+    public static final By FAQ_QUESTION_ONE = By.xpath(".//div[@class='accordion__item'][1]//div[@class='accordion__button']");
+    //Список "Вопросы о важном" вопрос 2
+    public static final By FAQ_QUESTION_TWO = By.xpath(".//div[@class='accordion__item'][2]//div[@class='accordion__button']");
+    //Список "Вопросы о важном" вопрос 3
+    public static final By FAQ_QUESTION_THREE = By.xpath(".//div[@class='accordion__item'][3]//div[@class='accordion__button']");
+    //Список "Вопросы о важном" вопрос 4
+    public static final By FAQ_QUESTION_FOUR = By.xpath(".//div[@class='accordion__item'][4]//div[@class='accordion__button']");
+    //Список "Вопросы о важном" вопрос 5
+    public static final By FAQ_QUESTION_FIVE = By.xpath(".//div[@class='accordion__item'][5]//div[@class='accordion__button']");
+    //Список "Вопросы о важном" вопрос 6
+    public static final By FAQ_QUESTION_SIX = By.xpath(".//div[@class='accordion__item'][6]//div[@class='accordion__button']");
+    //Список "Вопросы о важном" вопрос 7
+    public static final By FAQ_QUESTION_SEVEN = By.xpath(".//div[@class='accordion__item'][7]//div[@class='accordion__button']");
+    //Список "Вопросы о важном" вопрос 8
+    public static final By FAQ_QUESTION_EIGHT = By.xpath(".//div[@class='accordion__item'][8]//div[@class='accordion__button']");
     //Список "Вопросы о важном" текст вопросов
     public static final By FAQ_QUESTIONS_TEXT = By.xpath(".//div[@class='accordion']");
     //Список "Вопросы о важном" видимые ответы
