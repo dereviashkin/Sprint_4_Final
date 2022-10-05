@@ -83,6 +83,4 @@ public class OrderPage {
         getDriver().findElement(ORDER_BUTTON_ABSOLUTELY_COMPLETE).click();
         return this;
     }
-
-
 }

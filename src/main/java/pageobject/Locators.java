@@ -54,5 +54,4 @@ public class Locators {
     public static final By ORDER_BUTTON_COMPLETE = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
     //Попап окно прямо совсем точного подтверждения
     public static final By ORDER_BUTTON_ABSOLUTELY_COMPLETE = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Да']");
-
 }
