@@ -73,7 +73,7 @@ public class MainPage {
      * @param expected ожидаемый текст заголовка
      * @param locator  локатор заголовка на странице
      */
-    public void checkIfPageOpened(String expected, By locator) {
+    private void checkIfPageOpened(String expected, By locator) {
         Assert.assertEquals("Похоже, ожидаемая страница не загрузилась", expected, getDriver().findElement(locator).getText());
     }
 
