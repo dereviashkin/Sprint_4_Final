@@ -46,54 +46,10 @@ public class OrderPage {
     private By inputComment = By.xpath(".//div/input[@placeholder='Комментарий для курьера']");
     //Кнопка подтверждения заказа
     private By orderButtonComplete = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
-    //Попап окно прямо совсем точного подтверждения
+    //Элемент попап окна прямо совсем точного подтверждения
+    private By orderPopupWindowAbsolutelyComplete = By.xpath(".//div[@class='Order_Modal__YZ-d3']");
+    //Кнопка "да" в попап окне прямо совсем точного подтверждения
     private By orderButtonAbsolutelyComplete = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Да']");
-
-    private String name;
-    private String surname;
-    private String address;
-    private String metroStation;
-    private String number;
-    private String date;
-    private String comment;
-
-    /**
-     * Конструктор с передачей тестовых данных только для страницы данных покупателя
-     *
-     * @param name         имя
-     * @param surname      фамилия
-     * @param address      адрес
-     * @param metroStation станция метро
-     * @param number       номер телефона
-     */
-    public OrderPage(String name, String surname, String address, String metroStation, String number) {
-        this.name = name;
-        this.surname = surname;
-        this.address = address;
-        this.metroStation = metroStation;
-        this.number = number;
-    }
-
-    /**
-     * Конструктор с передачей тестовых данных
-     *
-     * @param name         имя
-     * @param surname      фамилия
-     * @param address      адрес
-     * @param metroStation станция метро
-     * @param number       номер телефона
-     * @param date         дата подачи самоката
-     * @param comment      комментарий для курьера
-     */
-    public OrderPage(String name, String surname, String address, String metroStation, String number, String date, String comment) {
-        this.name = name;
-        this.surname = surname;
-        this.address = address;
-        this.metroStation = metroStation;
-        this.number = number;
-        this.date = date;
-        this.comment = comment;
-    }
 
     /**
      * Метод открытия страницы заказа
@@ -144,7 +100,7 @@ public class OrderPage {
     /**
      * Заполняет форму заказа тестовыми данными покупателя
      */
-    public OrderPage fillPersonalDataOrderForm() {
+    public OrderPage fillPersonalDataOrderForm(String name, String surname, String address, String number) {
         getDriver().findElement(inputName).sendKeys(name);
         getDriver().findElement(inputSurname).sendKeys(surname);
         getDriver().findElement(inputAddress).sendKeys(address);
@@ -162,17 +118,17 @@ public class OrderPage {
         getDriver().findElement(inputMetroStationCherkizovskaya).click();
     }
 
-    /**
-     * Метод проверки правильного заполнения полей формы данных покупателя
-     */
-    public OrderPage checkIfPesonalDataFormFilledCorrect() {
-        checkIfInputFilledCorrect(name, inputName);
-        checkIfInputFilledCorrect(surname, inputSurname);
-        checkIfInputFilledCorrect(address, inputAddress);
-        checkIfInputFilledCorrect(number, inputPhoneNumber);
-        checkIfInputFilledCorrect(metroStation, inputMetroStation);
-        return this;
-    }
+//    /**
+//     * Метод проверки правильного заполнения полей формы данных покупателя
+//     */
+//    public OrderPage checkIfPesonalDataFormFilledCorrect() {
+//        checkIfInputFilledCorrect(name, inputName);
+//        checkIfInputFilledCorrect(surname, inputSurname);
+//        checkIfInputFilledCorrect(address, inputAddress);
+//        checkIfInputFilledCorrect(number, inputPhoneNumber);
+//        checkIfInputFilledCorrect(metroStation, inputMetroStation);
+//        return this;
+//    }
 
     /**
      * Общий метод проверки, что полученное из поля для ввода значение соответствует передаваемому
@@ -207,7 +163,7 @@ public class OrderPage {
     /**
      * Заполняем вторую часть формы заказа
      */
-    public OrderPage fillRentOrderForm() {
+    public OrderPage fillRentOrderForm(String date, String comment) {
         getDriver().findElement(inputDateScooterDelivery).sendKeys(date);
         getDriver().findElement(inputTermRate).click();
         getDriver().findElement(inputTermRateDay).click();
@@ -216,15 +172,15 @@ public class OrderPage {
         return this;
     }
 
-    /**
-     * Метод проверки правильного заполнения полей формы выбора самоката
-     */
-    public OrderPage checkIfScooterDataFormFilledCorrect() {
-        checkIfInputFilledCorrect(date, inputDateScooterDelivery);
-        Assert.assertEquals("сутки", getDriver().findElement(inputTermRateDayCheck).getText());
-        checkIfInputFilledCorrect(comment, inputComment);
-        return this;
-    }
+//    /**
+//     * Метод проверки правильного заполнения полей формы выбора самоката
+//     */
+//    public OrderPage checkIfScooterDataFormFilledCorrect() {
+//        checkIfInputFilledCorrect(date, inputDateScooterDelivery);
+//        Assert.assertEquals("сутки", getDriver().findElement(inputTermRateDayCheck).getText());
+//        checkIfInputFilledCorrect(comment, inputComment);
+//        return this;
+//    }
 
     /**
      * Метод клика по кнопке "Заказать"
@@ -241,6 +197,11 @@ public class OrderPage {
     public OrderPage clickConfirmOrderButton() {
         getDriverWait().until(ExpectedConditions.visibilityOfElementLocated(orderButtonAbsolutelyComplete));
         getDriver().findElement(orderButtonAbsolutelyComplete).click();
+        return this;
+    }
+
+    public OrderPage checkIfConfirmOrderWindowClosed() {
+        Assert.assertEquals("Похоже, окно подтверждения заказа не закрылось.", 0, getDriver().findElements(orderPopupWindowAbsolutelyComplete).size());
         return this;
     }
 }
