@@ -1,46 +1,111 @@
 package pageobject.pages;
 
-import drivermanager.DriverManager;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static drivermanager.DriverManager.getDriver;
 import static drivermanager.DriverManager.getDriverWait;
-import static pageobject.Locators.*;
-import static pageobject.Urls.ORDER_PAGE;
 
 public class OrderPage {
 
+    private String orderPage = "https://qa-scooter.praktikum-services.ru/order";
+    //Кнопка принятия куков "да все привыкли"
+    private By acceptCookieButton = By.className("App_CookieButton__3cvqF");
+    //Элемент окна принятия кукуков
+    private By cookieWindows = By.className(".App_CookieConsent__1yUIN");
+    //Элемент с текстом заголовка страницы
+    private By orderHeader = By.className("Order_Header__BZXOb");
+    //Строка ввода имени
+    private By inputName = By.xpath(".//div/input[@placeholder='* Имя']");
+    //Строка ввода фамилии
+    private By inputSurname = By.xpath(".//div/input[@placeholder='* Фамилия']");
+    //Строка ввода адреса
+    private By inputAddress = By.xpath(".//div/input[@placeholder='* Адрес: куда привезти заказ']");
+    //Выпадающее меню выбора станции метро
+    private By inputMetroStation = By.xpath(".//div/input[@placeholder='* Станция метро']");
+    //Массив элементов выпадающего меню станций метро
+    private By inputMetroStationCherkizovskaya = By.xpath(".//li[@data-index='1']");
+    //Строка ввода телефона
+    private By inputPhoneNumber = By.xpath(".//div/input[@placeholder='* Телефон: на него позвонит курьер']");
+    //Строка ввода телефона
+    private By inputFormErrorMessage = By.xpath(".//div[@class='Input_ErrorMessage__3HvIb Input_Visible___syz6']");
+    //Кнопка Далее
+    private By nextButton = By.cssSelector(".Button_Button__ra12g.Button_Middle__1CSJM");
+    //Строка ввода даты подачи самоката
+    private By inputDateScooterDelivery = By.xpath(".//div/input[@placeholder='* Когда привезти самокат']");
+    //Строка ввода срока аренды самоката
+    private By inputTermRate = By.cssSelector(".Dropdown-arrow");
+    //Пункт выпадающего меню 1 день
+    private By inputTermRateDay = By.xpath(".//div[@class='Dropdown-menu']/div[text()='сутки']");
+    //Проверка установки срока аренды
+    private By inputTermRateDayCheck = By.xpath(".//div[@class='Dropdown-placeholder is-selected']");
+    //Чекбокс для черного цвета самоката
+    private By checkboxColour = By.id("black");
+    //Строка ввода комментария для курьера
+    private By inputComment = By.xpath(".//div/input[@placeholder='Комментарий для курьера']");
+    //Кнопка подтверждения заказа
+    private By orderButtonComplete = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    //Элемент попап окна прямо совсем точного подтверждения
+    private By orderPopupWindowAbsolutelyComplete = By.xpath(".//div[@class='Order_Modal__YZ-d3']");
+    //Кнопка "да" в попап окне прямо совсем точного подтверждения
+    private By orderButtonAbsolutelyComplete = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Да']");
+
     /**
-     * Метод открытия главной страницы
-     * Перекликается с методом orderButtonTopClick() в MainPage
+     * Метод открытия страницы заказа
      */
-    public OrderPage open() {
-        getDriver().get(ORDER_PAGE);
-        DriverManager.getDriverWait().until(ExpectedConditions.visibilityOfElementLocated(ORDER_HEADER));
-        Assert.assertEquals("Похоже, главная страница не загрузилась", "Для кого самокат", getDriver().findElement(ORDER_HEADER).getText());
-        if (getDriver().findElements(ACCEPT_COOKIE_BUTTON).size() != 0) {
-            getDriver().findElement(ACCEPT_COOKIE_BUTTON).click();
-        }
+    public OrderPage openOrderPage() {
+        getDriver().get(orderPage);
+        getDriverWait().until(ExpectedConditions.visibilityOfElementLocated(orderHeader));
         return this;
     }
 
     /**
-     * Заполняет форму заказа тестовыми данными
+     * Общий метод проверки открытия страницы
+     *
+     * @param expected ожидаемый текст заголовка
+     * @param locator  локатор заголовка на странице
      */
-    public OrderPage personalDataOrderForm(String name, String surname, String address, String number, boolean noErrors) {
-        getDriver().findElement(INPUT_NAME).sendKeys(name);
-        Assert.assertEquals(name, getDriver().findElement(INPUT_NAME).getAttribute("value"));
-        getDriver().findElement(INPUT_SURNAME).sendKeys(surname);
-        Assert.assertEquals(surname, getDriver().findElement(INPUT_SURNAME).getAttribute("value"));
-        getDriver().findElement(INPUT_ADDRESS).sendKeys(address);
-        Assert.assertEquals(address, getDriver().findElement(INPUT_ADDRESS).getAttribute("value"));
-        getDriver().findElement(INPUT_PHONE_NUMBER).sendKeys(number);
+    private void checkIfPageOpened(String expected, By locator) {
+        Assert.assertEquals("Похоже, ожидаемая страница не загрузилась", expected, getDriver().findElement(locator).getText());
+    }
+
+    /**
+     * Метод проверки открытия страницы заказа с вводом данных покупателя
+     */
+    public OrderPage checkIfOrderPageOpenedPersonInfo() {
+        checkIfPageOpened("Для кого самокат", orderHeader);
+        return this;
+    }
+
+    /**
+     * Метод проверки открытия страницы заказа с вводом данных о самокате
+     */
+    public OrderPage checkIfOrderPageOpenedScooterInfo() {
+        checkIfPageOpened("Про аренду", orderHeader);
+        return this;
+    }
+
+    /**
+     * Метод нажимания кнопки "принять куки"
+     */
+    public OrderPage clickAcceptCookieButton() {
+        if (getDriver().findElements(acceptCookieButton).size() != 0) {
+            getDriver().findElement(acceptCookieButton).click();
+        }
+        getDriverWait().until(ExpectedConditions.invisibilityOfElementLocated(cookieWindows));
+        return this;
+    }
+
+    /**
+     * Заполняет форму заказа тестовыми данными покупателя
+     */
+    public OrderPage fillPersonalDataOrderForm(String name, String surname, String address, String number) {
+        getDriver().findElement(inputName).sendKeys(name);
+        getDriver().findElement(inputSurname).sendKeys(surname);
+        getDriver().findElement(inputAddress).sendKeys(address);
+        getDriver().findElement(inputPhoneNumber).sendKeys(number);
         selectMetroStation();
-        //Проверяем, что номер соответствует переданному
-        Assert.assertEquals(number, getDriver().findElement(INPUT_PHONE_NUMBER).getAttribute("value"));
-        //Проверяем, что ошибки под строкой номера не образовалось
-        Assert.assertEquals(noErrors, getDriver().findElements(INPUT_PHONE_NUMBER_ERROR_MESSAGE).size() == 0);
         return this;
     }
 
@@ -48,39 +113,95 @@ public class OrderPage {
      * Выбираем станцию метро
      */
     private void selectMetroStation() {
-        getDriver().findElement(INPUT_METRO_STATION).click();
-        getDriverWait().until(ExpectedConditions.visibilityOfElementLocated(INPUT_METRO_STATION_CHERKIZOVSKAYA));
-        getDriver().findElement(INPUT_METRO_STATION_CHERKIZOVSKAYA).click();
-        Assert.assertEquals("Черкизовская", getDriver().findElement(INPUT_METRO_STATION).getAttribute("value"));
+        getDriver().findElement(inputMetroStation).click();
+        getDriverWait().until(ExpectedConditions.visibilityOfElementLocated(inputMetroStationCherkizovskaya));
+        getDriver().findElement(inputMetroStationCherkizovskaya).click();
+    }
+
+//    /**
+//     * Метод проверки правильного заполнения полей формы данных покупателя
+//     */
+//    public OrderPage checkIfPesonalDataFormFilledCorrect() {
+//        checkIfInputFilledCorrect(name, inputName);
+//        checkIfInputFilledCorrect(surname, inputSurname);
+//        checkIfInputFilledCorrect(address, inputAddress);
+//        checkIfInputFilledCorrect(number, inputPhoneNumber);
+//        checkIfInputFilledCorrect(metroStation, inputMetroStation);
+//        return this;
+//    }
+
+    /**
+     * Общий метод проверки, что полученное из поля для ввода значение соответствует передаваемому
+     *
+     * @param inputText отправляемый текст
+     * @param locator   локатор поля для ввода
+     */
+    private void checkIfInputFilledCorrect(String inputText, By locator) {
+        Assert.assertEquals(inputText, getDriver().findElement(locator).getAttribute("value"));
     }
 
     /**
-     * Сликаем кнопку далее и проверяем, что попали на следующую страницу заказа
+     * Метод проверки отстутствия сообщений об ошибках после ввода значений в текстовые поля формы
+     *
+     * @param noErrors ожидаемый результат проверки
+     */
+    public OrderPage checkIfNoErrors(boolean noErrors) {
+        Assert.assertEquals(noErrors, getDriver().findElements(inputFormErrorMessage).size() == 0);
+        return this;
+    }
+
+    /**
+     * Метод клика кнопки далее
      */
     public OrderPage clickNextButton() {
-        getDriverWait().until(ExpectedConditions.elementToBeClickable(NEXT_BUTTON));
-        getDriver().findElement(NEXT_BUTTON).click();
-        getDriverWait().until(ExpectedConditions.visibilityOfElementLocated(ORDER_HEADER));
-        Assert.assertEquals("Похоже, страница заказа не загрузилась", "Про аренду", getDriver().findElement(ORDER_HEADER).getText());
+        getDriverWait().until(ExpectedConditions.elementToBeClickable(nextButton));
+        getDriver().findElement(nextButton).click();
+        getDriverWait().until(ExpectedConditions.visibilityOfElementLocated(orderHeader));
         return this;
     }
 
     /**
      * Заполняем вторую часть формы заказа
-     * Кнопка "Да" во всплывающем окне окончательного подтверждения заказа не работает,
-     * поэтому не добавляю ассерт оформления заказа
      */
-    public OrderPage rentOrderForm() {
-        getDriver().findElement(INPUT_DATE_SCOOTER_DELIVERY).sendKeys("03.10.2022");
-        Assert.assertEquals("03.10.2022", getDriver().findElement(INPUT_DATE_SCOOTER_DELIVERY).getAttribute("value"));
-        getDriver().findElement(INPUT_TERM_RATE).click();
-        getDriver().findElement(INPUT_TERM_RATE_DAY).click();
-        Assert.assertEquals("сутки", getDriver().findElement(INPUT_TERM_RATE_DAY_CHECK).getText());
-        getDriver().findElement(CHECKBOX_COLOUR).click();
-        getDriver().findElement(INPUT_COMMENT).sendKeys("Если ты плачешь не от счастья, то перестань. ©Филипп Джей Фрай");
-        getDriver().findElement(ORDER_BUTTON_COMPLETE).click();
-        getDriverWait().until(ExpectedConditions.visibilityOfElementLocated(ORDER_BUTTON_ABSOLUTELY_COMPLETE));
-        getDriver().findElement(ORDER_BUTTON_ABSOLUTELY_COMPLETE).click();
+    public OrderPage fillRentOrderForm(String date, String comment) {
+        getDriver().findElement(inputDateScooterDelivery).sendKeys(date);
+        getDriver().findElement(inputTermRate).click();
+        getDriver().findElement(inputTermRateDay).click();
+        getDriver().findElement(checkboxColour).click();
+        getDriver().findElement(inputComment).sendKeys(comment);
+        return this;
+    }
+
+//    /**
+//     * Метод проверки правильного заполнения полей формы выбора самоката
+//     */
+//    public OrderPage checkIfScooterDataFormFilledCorrect() {
+//        checkIfInputFilledCorrect(date, inputDateScooterDelivery);
+//        Assert.assertEquals("сутки", getDriver().findElement(inputTermRateDayCheck).getText());
+//        checkIfInputFilledCorrect(comment, inputComment);
+//        return this;
+//    }
+
+    /**
+     * Метод клика по кнопке "Заказать"
+     */
+    public OrderPage clickOrderButton() {
+        getDriverWait().until(ExpectedConditions.elementToBeClickable(orderButtonComplete));
+        getDriver().findElement(orderButtonComplete).click();
+        return this;
+    }
+
+    /**
+     * Метод клика по кнопке "Да" во всплывшем окне "Хотите оформить заказ?"
+     */
+    public OrderPage clickConfirmOrderButton() {
+        getDriverWait().until(ExpectedConditions.visibilityOfElementLocated(orderButtonAbsolutelyComplete));
+        getDriver().findElement(orderButtonAbsolutelyComplete).click();
+        return this;
+    }
+
+    public OrderPage checkIfConfirmOrderWindowClosed() {
+        Assert.assertEquals("Похоже, окно подтверждения заказа не закрылось.", 0, getDriver().findElements(orderPopupWindowAbsolutelyComplete).size());
         return this;
     }
 }
