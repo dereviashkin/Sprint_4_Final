@@ -9,45 +9,45 @@ import static drivermanager.DriverManager.getDriverWait;
 
 public class OrderPage {
 
-    private static String orderPage = "https://qa-scooter.praktikum-services.ru/order";
+    private String orderPage = "https://qa-scooter.praktikum-services.ru/order";
     //Кнопка принятия куков "да все привыкли"
-    private static By acceptCookieButton = By.className("App_CookieButton__3cvqF");
+    private By acceptCookieButton = By.className("App_CookieButton__3cvqF");
     //Элемент окна принятия кукуков
-    private static By cookieWindows = By.className(".App_CookieConsent__1yUIN");
+    private By cookieWindows = By.className(".App_CookieConsent__1yUIN");
     //Элемент с текстом заголовка страницы
-    private static By orderHeader = By.className("Order_Header__BZXOb");
+    private By orderHeader = By.className("Order_Header__BZXOb");
     //Строка ввода имени
-    private static By inputName = By.xpath(".//div/input[@placeholder='* Имя']");
+    private By inputName = By.xpath(".//div/input[@placeholder='* Имя']");
     //Строка ввода фамилии
-    private static By inputSurname = By.xpath(".//div/input[@placeholder='* Фамилия']");
+    private By inputSurname = By.xpath(".//div/input[@placeholder='* Фамилия']");
     //Строка ввода адреса
-    private static By inputAddress = By.xpath(".//div/input[@placeholder='* Адрес: куда привезти заказ']");
+    private By inputAddress = By.xpath(".//div/input[@placeholder='* Адрес: куда привезти заказ']");
     //Выпадающее меню выбора станции метро
-    private static By inputMetroStation = By.xpath(".//div/input[@placeholder='* Станция метро']");
+    private By inputMetroStation = By.xpath(".//div/input[@placeholder='* Станция метро']");
     //Массив элементов выпадающего меню станций метро
-    private static By inputMetroStationCherkizovskaya = By.xpath(".//li[@data-index='1']");
+    private By inputMetroStationCherkizovskaya = By.xpath(".//li[@data-index='1']");
     //Строка ввода телефона
-    private static By inputPhoneNumber = By.xpath(".//div/input[@placeholder='* Телефон: на него позвонит курьер']");
+    private By inputPhoneNumber = By.xpath(".//div/input[@placeholder='* Телефон: на него позвонит курьер']");
     //Строка ввода телефона
-    private static By inputFormErrorMessage = By.xpath(".//div[@class='Input_ErrorMessage__3HvIb Input_Visible___syz6']");
+    private By inputFormErrorMessage = By.xpath(".//div[@class='Input_ErrorMessage__3HvIb Input_Visible___syz6']");
     //Кнопка Далее
-    private static By nextButton = By.cssSelector(".Button_Button__ra12g.Button_Middle__1CSJM");
+    private By nextButton = By.cssSelector(".Button_Button__ra12g.Button_Middle__1CSJM");
     //Строка ввода даты подачи самоката
-    private static By inputDateScooterDelivery = By.xpath(".//div/input[@placeholder='* Когда привезти самокат']");
+    private By inputDateScooterDelivery = By.xpath(".//div/input[@placeholder='* Когда привезти самокат']");
     //Строка ввода срока аренды самоката
-    private static By inputTermRate = By.cssSelector(".Dropdown-arrow");
+    private By inputTermRate = By.cssSelector(".Dropdown-arrow");
     //Пункт выпадающего меню 1 день
-    private static By inputTermRateDay = By.xpath(".//div[@class='Dropdown-menu']/div[text()='сутки']");
+    private By inputTermRateDay = By.xpath(".//div[@class='Dropdown-menu']/div[text()='сутки']");
     //Проверка установки срока аренды
-    private static By inputTermRateDayCheck = By.xpath(".//div[@class='Dropdown-placeholder is-selected']");
+    private By inputTermRateDayCheck = By.xpath(".//div[@class='Dropdown-placeholder is-selected']");
     //Чекбокс для черного цвета самоката
-    private static By checkboxColour = By.id("black");
+    private By checkboxColour = By.id("black");
     //Строка ввода комментария для курьера
-    private static By inputComment = By.xpath(".//div/input[@placeholder='Комментарий для курьера']");
+    private By inputComment = By.xpath(".//div/input[@placeholder='Комментарий для курьера']");
     //Кнопка подтверждения заказа
-    private static By orderButtonComplete = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    private By orderButtonComplete = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
     //Попап окно прямо совсем точного подтверждения
-    private static By orderButtonAbsolutelyComplete = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Да']");
+    private By orderButtonAbsolutelyComplete = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Да']");
 
     private String name;
     private String surname;
